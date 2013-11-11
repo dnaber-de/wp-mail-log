@@ -42,7 +42,7 @@ class Mail_Log extends Model\Custom_Post_Type {
 				'title',
 				'editor',
 			),
-			'has_archive'
+			'has_archive'          => FALSE,
 			'query_var'            => 'wp_mail_log',
 			'can_export'           => TRUE,
 			'show_in_nav_menus'    => FALSE,
