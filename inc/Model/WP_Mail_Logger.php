@@ -103,7 +103,7 @@ class WP_Mail_Logger {
 
 		$post = array(
 			'post_title'   => '<' . $mail[ 'to' ] . '> ' . $mail[ 'subject' ],
-			'post_content' => $content,
+			'post_content' => esc_html( $content ),
 			'post_type'    => $this->post_type->post_type,
 			'post_date'    => date( 'Y-m-d H:i:s', $mail[ 'timestamp' ] ),
 			'post_status'  => 'private'
