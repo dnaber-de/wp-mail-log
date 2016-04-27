@@ -12,14 +12,14 @@
  */
 namespace dna\WP_Mail_Log;
 
-if ( ! function_exists( '\add_filter' ) )
+if ( ! function_exists( 'add_filter' ) )
 	return;
 
 require_once( 'inc/autoload.php' );
 
-\add_action( 'wp_loaded', __NAMESPACE__ . '\load_plugin' );
-\add_filter( 'wp_mail', __NAMESPACE__ . '\log_wp_mail', 10, 5 );
-\register_uninstall_hook( __FILE__, __NAMESPACE__ . '\uninstall' );
+add_action( 'wp_loaded', __NAMESPACE__ . '\load_plugin' );
+add_filter( 'wp_mail', __NAMESPACE__ . '\log_wp_mail', 10, 5 );
+register_uninstall_hook( __FILE__, __NAMESPACE__ . '\uninstall' );
 
 /**
  * @wp-hook plugins_loaded
@@ -68,7 +68,7 @@ function log_wp_mail( $mail ) {
 function uninstall() {
 
 	$post_type = new Model\Post_Type\Mail_Log;
-	if ( ! \post_type_exists( $post_type->post_type ) )
+	if ( ! post_type_exists( $post_type->post_type ) )
 		$post_type->register();
 
 	$query_args = array(
@@ -79,11 +79,12 @@ function uninstall() {
 		'update_post_term_cache' => FALSE,
 		'update_post_meta_cache' => FALSE
 	);
+
 	$query = new \WP_Query( $query_args );
 	if ( ! $query->have_posts() )
 		return;
 
 	foreach ( $query->posts as $post_ID ) {
-		\wp_delete_post( $post_ID, TRUE );
+		wp_delete_post( $post_ID, TRUE );
 	}
 }

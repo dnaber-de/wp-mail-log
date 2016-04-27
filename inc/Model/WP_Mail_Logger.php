@@ -71,8 +71,8 @@ class WP_Mail_Logger {
 		$error = FALSE;
 		foreach ( $this->mail_log as $mail ) {
 			$post = $this->build_post( $mail );
-			$post_ID = \wp_insert_post( $post, TRUE );
-			if ( \is_wp_error( $post_ID ) ) {
+			$post_ID = wp_insert_post( $post, TRUE );
+			if ( is_wp_error( $post_ID ) ) {
 				if ( ! $error )
 					$error = new \WP_Error;
 				$error->add(

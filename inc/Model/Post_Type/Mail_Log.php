@@ -6,7 +6,8 @@
  */
 
 namespace dna\WP_Mail_Log\Model\Post_Type;
-use \dna\WP_Mail_Log\Model as Model;
+
+use \dna\WP_Mail_Log\Model;
 
 class Mail_Log extends Model\Custom_Post_Type {
 

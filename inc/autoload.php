@@ -7,7 +7,7 @@
 
 namespace dna\WP_Mail_Log;
 
-\spl_autoload_register( __NAMESPACE__ . '\autoload' );
+spl_autoload_register( __NAMESPACE__ . '\autoload' );
 
 /**
  * requires a class by classname
