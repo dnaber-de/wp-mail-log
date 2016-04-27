@@ -6,7 +6,7 @@
  */
 namespace dna\WP_Mail_Log\Model;
 
-class WP_Mail_Logger {
+class WP_Mail_Logger implements Mail_Logger {
 
 	/**
 	 * post type
@@ -40,9 +40,10 @@ class WP_Mail_Logger {
 	 * @param string $message
 	 * @param string $headers
 	 * @param array $attachments
+	 *
 	 * @return void
 	 */
-	public function log( $to, $subject, $message, $headers, $attachments ) {
+	public function log( $to, $subject, $message, $headers = '', array $attachments = [] ) {
 
 		$this->mail_log[] = array(
 			'to'      => $to,
