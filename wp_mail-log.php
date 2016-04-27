@@ -53,7 +53,7 @@ function log_wp_mail( $mail ) {
 		$mail[ 'attachments' ]
 	);
 	if ( did_action( 'dnaml_post_type_registered' ) )
-		$success = $logger->save();
+		$logger->save();
 	else
 		add_action( 'dnaml_post_type_registered', array( $logger, 'save' ) );
 
