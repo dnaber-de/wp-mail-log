@@ -4,7 +4,7 @@
  * Plugin Name: wp_mail() Log
  * Description: Logs wp_mail() calls as CPT.
  * Plugin URI:  https://github.com/dnaber-de/wp-mail-log
- * Version:     2012.11.10
+ * Version:     0.1.0
  * Author:      David Naber
  * Author URI:  http://dnaber.de/
  * License:     MIT
