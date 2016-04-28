@@ -98,31 +98,23 @@ class WP_Mail_Logger implements Mail_Logger {
 	 */
 	protected function build_post( $mail ) {
 
-		if ( is_array( $mail[ 'to' ] ) ) {
-			$to = array_shift( $mail[ 'to' ] );
-			$additional_recipients = $mail[ 'to' ];
-		} else {
-			$to = $mail[ 'to' ];
-			$additional_recipients = array();
-		}
+		$to = 'To: ';
+		$to .= is_array( $mail[ 'to' ] )
+			? implode( ',', $mail[ 'to' ] )
+			: $mail[ 'to' ];
 
 		$headers = is_array( $mail[ 'headers' ] )
 			? print_r( $mail[ 'headers' ], TRUE )
 			: $mail[ 'headers' ];
 
-		if ( $additional_recipients ) {
-			$headers = "To: "
-				. implode( ',', $additional_recipients )
-				. PHP_EOL
-				. $headers;
-		}
-
-		$content = $headers
+		$content = $to
+			. PHP_EOL
+			. $headers
 			. str_repeat( PHP_EOL, 2 )
 			. $mail[ 'message' ];
 
 		$post = array(
-			'post_title'   => '<' . $to . '> ' . $mail[ 'subject' ],
+			'post_title'   => $mail[ 'subject' ],
 			'post_content' => esc_html( $content ),
 			'post_type'    => $this->post_type->post_type,
 			'post_date'    => date( 'Y-m-d H:i:s', $mail[ 'timestamp' ] ),
