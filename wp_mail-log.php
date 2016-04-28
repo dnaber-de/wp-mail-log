@@ -31,7 +31,18 @@ function load_plugin() {
 	$mail_log_cpt->register();
 
 	do_action( 'dnaml_post_type_registered' );
+
+	add_action( 'phpmailer_init', function( \PHPMailer $phpmailer ) {
+
+		// avoid sending the mails
+
+		if ( ! defined( 'MAIL_LOG_BLOCK_MAILS' ) || ! MAIL_LOG_BLOCK_MAILS )
+			return;
+
+		$phpmailer->clearAllRecipients();
+	} );
 }
+
 
 
 /**
