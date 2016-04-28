@@ -35,15 +35,15 @@ class WP_Mail_Logger implements Mail_Logger {
 	/**
 	 * add a record to a log
 	 *
-	 * @param string $to
+	 * @param string|array $to
 	 * @param string $subject
 	 * @param string $message
-	 * @param string $headers
-	 * @param array $attachments
+	 * @param string|array $headers
+	 * @param string|array $attachments
 	 *
 	 * @return void
 	 */
-	public function log( $to, $subject, $message, $headers = '', array $attachments = [] ) {
+	public function log( $to, $subject, $message, $headers = '', $attachments = '' ) {
 
 		$this->mail_log[] = array(
 			'to'      => $to,
@@ -98,12 +98,31 @@ class WP_Mail_Logger implements Mail_Logger {
 	 */
 	protected function build_post( $mail ) {
 
-		$content = $mail[ 'headers' ]
+		if ( is_array( $mail[ 'to' ] ) ) {
+			$to = array_shift( $mail[ 'to' ] );
+			$additional_recipients = $mail[ 'to' ];
+		} else {
+			$to = $mail[ 'to' ];
+			$additional_recipients = array();
+		}
+
+		$headers = is_array( $mail[ 'headers' ] )
+			? print_r( $mail[ 'headers' ], TRUE )
+			: $mail[ 'headers' ];
+
+		if ( $additional_recipients ) {
+			$headers = "To: "
+				. implode( ',', $additional_recipients )
+				. PHP_EOL
+				. $headers;
+		}
+
+		$content = $headers
 			. str_repeat( PHP_EOL, 2 )
 			. $mail[ 'message' ];
 
 		$post = array(
-			'post_title'   => '<' . $mail[ 'to' ] . '> ' . $mail[ 'subject' ],
+			'post_title'   => '<' . $to . '> ' . $mail[ 'subject' ],
 			'post_content' => esc_html( $content ),
 			'post_type'    => $this->post_type->post_type,
 			'post_date'    => date( 'Y-m-d H:i:s', $mail[ 'timestamp' ] ),
