@@ -49,7 +49,9 @@ function load_plugin() {
  * log wp_mail calls
  *
  * @wp-hook wp_mail
+ *
  * @param array $mail ( 'to', 'subject', 'message', 'headers', 'attachments' )
+ *
  * @return void
  */
 function log_wp_mail( $mail ) {
@@ -67,8 +69,6 @@ function log_wp_mail( $mail ) {
 		$logger->save();
 	else
 		add_action( 'dnaml_post_type_registered', array( $logger, 'save' ) );
-
-	return $mail;
 }
 
 /**
