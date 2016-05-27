@@ -52,7 +52,7 @@ function load_plugin() {
  *
  * @param array $mail ( 'to', 'subject', 'message', 'headers', 'attachments' )
  *
- * @return void
+ * @return array
  */
 function log_wp_mail( $mail ) {
 
@@ -69,6 +69,8 @@ function log_wp_mail( $mail ) {
 		$logger->save();
 	else
 		add_action( 'dnaml_post_type_registered', array( $logger, 'save' ) );
+
+	return $mail;
 }
 
 /**
